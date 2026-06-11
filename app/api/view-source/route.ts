@@ -1,29 +1,3 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-export async function GET(request: NextRequest) {
-  const url = request.nextUrl.searchParams.get('url');
-  if (!url) {
-    return NextResponse.json({ success: false, error: 'URL required' }, { status: 400 });
-  }
-
-  try {
-    const parsed = new URL(url);
-    if (!['http:', 'https:'].includes(parsed.protocol)) {
-      throw new Error('Only http/https allowed');
-    }
-
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; DevToolsBox/1.0)',
-        'Accept': 'text/html,application/xhtml+xml',
-      },
-    });
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const html = await res.text();
-
-    return NextResponse.json({ success: true, html, url });
-  } catch (err: any) {
-    return NextResponse.json({ success: false, error: err.message || 'Failed to fetch' }, { status: 500 });
-  }
-}
+export async function GET(req:NextRequest){ const u=req.nextUrl.searchParams.get('url'); if(!u)return NextResponse.json({success:false,error:'url req'}, {status:400});
+  try{ const p=new URL(u); if(!['http:','https:'].includes(p.protocol))throw new Error('only http/https'); const r=await fetch(u,{headers:{'User-Agent':'DevToolsBox/1.0','Accept':'text/html'}}); if(!r.ok)throw new Error('HTTP '+r.status); const h=await r.text(); return NextResponse.json({success:true,html:h,url:u}); }catch(e:any){return NextResponse.json({success:false,error:e.message||'fail'},{status:500});} }

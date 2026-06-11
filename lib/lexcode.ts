@@ -1,16 +1,5 @@
-export async function fetchLexcodeClaude(text: string, prompt?: string): Promise<string> {
-  const base = 'https://api.lexcode.biz.id/api/ai/claude/4-5-haiku';
-  const params = new URLSearchParams({ text });
-  if (prompt) params.append('prompt', prompt);
-
-  const res = await fetch(`${base}?${params.toString()}`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  });
-
-  if (!res.ok) throw new Error('LexCode Claude API error');
-
-  const json = await res.json();
-  if (!json.success || !json.result?.answer) throw new Error(json.message || 'No response from LexCode');
-  return json.result.answer;
+export async function fetchLexcodeClaude(text:string,prompt?:string):Promise<string>{
+  const base='https://api.lexcode.biz.id/api/ai/claude/4-5-haiku'; const ps=new URLSearchParams({text}); if(prompt)ps.append('prompt',prompt);
+  const r=await fetch(`${base}?${ps.toString()}`,{method:'GET',headers:{'Content-Type':'application/json'}});
+  if(!r.ok)throw new Error('LexCode error'); const j=await r.json(); if(!j.success||!j.result?.answer)throw new Error(j.message||'no ans'); return j.result.answer;
 }
