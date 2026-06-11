@@ -1,7 +1,7 @@
 export function buildPrompt(code: string, scope: string): string {
-  return `You are an expert code reviewer. Analyze the following code and return a JSON object ONLY — no markdown, no explanation, no backticks.
+  return `You are an expert code reviewer. Analyze the following code and return a JSON object ONLY — no markdown, no explanation, no backticks, no comments outside the JSON.
 
-JSON schema (strict):
+Strict JSON schema:
 
 {
   "language": string,

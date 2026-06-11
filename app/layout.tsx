@@ -17,8 +17,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'AI Code Reviewer',
-  description: 'AI-powered code review by DeepSeek',
+  title: 'Dev - Tools Box | AI Code Reviewer',
+  description:
+    'AI-powered code review by reiz_riz — analyze, fix, and improve your code instantly.',
 };
 
 export default function RootLayout({

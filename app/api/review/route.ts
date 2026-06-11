@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildPrompt } from '@/lib/prompt';
-import { fetchReview } from '@/lib/deepseek';
+import { fetchReview } from '@/lib/openrouter';
 import { extractJSON } from '@/lib/parser';
 
 const ERROR_MESSAGES = {
@@ -8,7 +8,8 @@ const ERROR_MESSAGES = {
   parse: 'AI returned unexpected format. Retrying...',
   unavailable: 'AI is busy. Try again in a moment.',
   empty_code: 'Paste your code first.',
-  too_long: 'Code too long. Max ~500 lines recommended.',
+  too_long: 'Code too long. Max ~5000 lines recommended.',
+  no_key: 'API key missing. Contact admin.',
 } as const;
 
 export async function POST(request: NextRequest) {
@@ -24,7 +25,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (code.length > 20000) {
+    if (code.length > 500000) {
       return NextResponse.json(
         { success: false, error: 'too_long' },
         { status: 400 }
@@ -35,7 +36,9 @@ export async function POST(request: NextRequest) {
       typeof options === 'object' && options !== null
         ? (options as Record<string, unknown>)
         : {};
-    const scope = Array.isArray(opts.scope) ? opts.scope.join(', ') : 'general';
+    const scope = Array.isArray(opts.scope)
+      ? opts.scope.join(', ')
+      : 'general';
     const prompt = buildPrompt(code, scope);
 
     const raw = await fetchReview(prompt);
@@ -55,10 +58,12 @@ export async function POST(request: NextRequest) {
       message.includes('No JSON found')
     ) {
       errorKey = 'parse';
+    } else if (message.includes('API key')) {
+      errorKey = 'no_key';
     }
 
     const status =
-      message === 'timeout' ? 504 : message === 'parse' ? 422 : 503;
+      errorKey === 'timeout' ? 504 : errorKey === 'parse' ? 422 : 503;
 
     return NextResponse.json(
       {

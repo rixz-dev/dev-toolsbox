@@ -26,6 +26,10 @@ export function ScoreGauge({ score, grade }: ScoreGaugeProps) {
 
   return (
     <div className="relative flex items-center justify-center w-40 h-40">
+      <div
+        className="absolute inset-0 rounded-full blur-2xl opacity-20"
+        style={{ backgroundColor: color }}
+      />
       <svg
         className="w-full h-full transform -rotate-90"
         viewBox="0 0 120 120"
@@ -49,11 +53,14 @@ export function ScoreGauge({ score, grade }: ScoreGaugeProps) {
           strokeDasharray={circumference}
           initial={{ strokeDashoffset: circumference }}
           animate={{ strokeDashoffset }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
         />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span
+        <motion.span
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="text-3xl font-bold"
           style={{
             fontFamily: 'var(--font-mono)',
@@ -61,8 +68,11 @@ export function ScoreGauge({ score, grade }: ScoreGaugeProps) {
           }}
         >
           {score}
-        </span>
-        <span
+        </motion.span>
+        <motion.span
+          initial={{ opacity: 0, y: 4 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
           className="text-sm font-bold uppercase tracking-wider"
           style={{
             fontFamily: 'var(--font-mono)',
@@ -70,7 +80,7 @@ export function ScoreGauge({ score, grade }: ScoreGaugeProps) {
           }}
         >
           {grade}
-        </span>
+        </motion.span>
       </div>
     </div>
   );
