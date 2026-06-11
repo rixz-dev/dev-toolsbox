@@ -61,6 +61,13 @@ const TOOLS = [
       'Generate JSDoc, Python docstrings, or inline comments for any code.',
     status: 'Live',
   },
+  // NEW FEATURES from UPDATE 6
+  { href: '/view-source', icon: ScanSearch, name: 'View Source + Download', description: 'Fetch any website source code and download as ZIP or individual files.', status: 'Live' },
+  { href: '/code-editor', icon: FileText, name: 'Code Editor + AI Partner', description: 'Full-featured editor for all languages + AI chat partner (talks only). Save, ZIP, 15+ tools.', status: 'Live' },
+  { href: '/encryptor', icon: Wand2, name: 'Encryption Generator', description: 'AES-256 + PBKDF2 encrypt/decrypt for HTML, JS, CSS, Python, TS and more. Download results.', status: 'Live' },
+  { href: '/yt-player', icon: MessagesSquare, name: 'YouTube MP3 Player', description: 'Search YouTube, play audio, download MP3. 6 search suggestions + manual URL support.', status: 'Live' },
+  { href: '/api-rest', icon: FileText, name: 'Free REST APIs Info', description: 'Curated list of free public REST APIs (downloader, AI, utilities).', status: 'Live' },
+  { href: '/oauth-flow', icon: GitCommitHorizontal, name: 'OAuth 2.0 Flow Diagrammer', description: 'Interactive visual builder for Authorization Code flow (token exchange etc).', status: 'Live' },
 ] as const;
 
 export default function Home() {
