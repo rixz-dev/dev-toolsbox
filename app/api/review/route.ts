@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
     const body = (await request.json()) as Record<string, unknown>;
     const code = body.code;
     const options = body.options;
+    const model = typeof body.model === 'string' ? body.model : undefined;
 
     if (!code || typeof code !== 'string' || code.trim().length === 0) {
       return NextResponse.json(
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
       : 'general';
     const prompt = buildPrompt(code, scope);
 
-    const raw = await fetchReview(prompt);
+    const raw = await fetchReview(prompt, model);
     const result = extractJSON(raw);
 
     return NextResponse.json({ success: true, data: result });
