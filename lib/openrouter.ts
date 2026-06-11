@@ -1,4 +1,5 @@
-import { MODEL_CHAIN, type ModelId, isValidModel } from './models';
+import { MODEL_CHAIN, type ModelId, isValidModel, isLexcodeClaudeModel } from './models';
+import { fetchLexcodeClaude } from './lexcode';
 
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
@@ -57,15 +58,31 @@ export async function chatCompletion(
   messages: ChatMessage[],
   preferredModel?: string
 ): Promise<string> {
-  const apiKey = getApiKey();
   const chain = resolveChain(preferredModel);
   let lastError: Error = new Error('AI unavailable');
 
   for (const model of chain) {
+    if (isLexcodeClaudeModel(model)) {
+      try {
+        const system = messages.find((m) => m.role === 'system')?.content;
+        const text = messages
+          .filter((m) => m.role !== 'system')
+          .map((m) => `${m.role.toUpperCase()}: ${m.content}`)
+          .join('\n\n');
+        const answer = await fetchLexcodeClaude(text, system);
+        if (answer.trim()) return answer;
+        lastError = new Error('Empty LexCode response');
+      } catch (err) {
+        lastError = err instanceof Error ? err : new Error('LexCode unavailable');
+      }
+      continue;
+    }
+
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 60000);
 
     try {
+      const apiKey = getApiKey();
       const res = await fetch(OPENROUTER_URL, {
         method: 'POST',
         headers: buildHeaders(apiKey),

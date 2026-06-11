@@ -37,14 +37,11 @@ export default function RootLayout({
           <footer className="border-t border-[var(--border)] py-4">
             <div className="max-w-[1600px] mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-[var(--text-muted)]">
               <span>Dev - Tools Box v2.0 — AI Developer Tools (Updated with 6 new features)</span>
-              <a
-                href="https://riz-dev-murex.vercel.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-[var(--accent-orange)] transition-colors"
-              >
-                Creator: reiz_riz
-              </a>
+              <div className="flex items-center gap-3 flex-wrap justify-center">
+                <a href="https://whatsapp.com/channel/0029VbC13UP1CYoODnULpp3E" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent-cyan)] transition-colors">WhatsApp Channel</a>
+                <a href="https://riz-dev-murex.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent-orange)] transition-colors">Portfolio</a>
+                <a href="https://github.com/rixz-dev" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--accent-cyan)] transition-colors">GitHub: rixz-dev</a>
+              </div>
             </div>
           </footer>
         </div>

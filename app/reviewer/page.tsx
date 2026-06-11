@@ -6,6 +6,7 @@ import { ReviewOutput } from '@/components/ReviewOutput';
 import { ModelSelector } from '@/components/ModelSelector';
 import { DEFAULT_MODEL, type ModelId } from '@/lib/models';
 import type { ReviewResult } from '@/lib/parser';
+import { LoadingWithGames } from '@/components/LoadingWithGames';
 
 type State = {
   result: ReviewResult | null;
@@ -90,6 +91,7 @@ export default function ReviewerPage() {
 
   return (
     <main className="flex-1 flex flex-col max-w-[1600px] mx-auto w-full p-4 md:p-6 gap-4">
+      <LoadingWithGames isOpen={state.loading} message="AI reviewing code..." />
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
           <h1 className="font-display text-xl md:text-2xl font-bold">

@@ -4,6 +4,8 @@ import {
   type ChatMessage,
 } from '@/lib/openrouter';
 import { searchTavily, buildSearchContext } from '@/lib/tavily';
+import { isLexcodeClaudeModel } from '@/lib/models';
+import { fetchLexcodeClaude } from '@/lib/lexcode';
 
 export const runtime = 'nodejs';
 
@@ -55,10 +57,53 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const encoder = new TextEncoder();
+
+    // LexCode Claude endpoint is not OpenRouter-compatible, so we emulate the same SSE
+    // shape used by the client and stream chunked text manually.
+    if (isLexcodeClaudeModel(model)) {
+      const systemContext = messages
+        .filter((m) => m.role === 'system')
+        .map((m) => m.content)
+        .join('\n\n');
+      const textContext = messages
+        .filter((m) => m.role !== 'system')
+        .map((m) => `${m.role.toUpperCase()}: ${m.content}`)
+        .join('\n\n');
+      const answer = await fetchLexcodeClaude(textContext, systemContext);
+      const stream = new ReadableStream<Uint8Array>({
+        start(controller) {
+          if (sources.length > 0) {
+            controller.enqueue(
+              encoder.encode(
+                `data: ${JSON.stringify({ type: 'sources', sources })}\n\n`
+              )
+            );
+          }
+          for (let i = 0; i < answer.length; i += 24) {
+            controller.enqueue(
+              encoder.encode(
+                `data: ${JSON.stringify({ type: 'token', token: answer.slice(i, i + 24) })}\n\n`
+              )
+            );
+          }
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`)
+          );
+          controller.close();
+        },
+      });
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache, no-transform',
+          Connection: 'keep-alive',
+        },
+      });
+    }
+
     // 3 & 4. Kirim ke OpenRouter, stream response ke client via SSE
     const upstream = await chatCompletionStream(messages, model);
-
-    const encoder = new TextEncoder();
     const decoder = new TextDecoder();
     let buffer = '';
 

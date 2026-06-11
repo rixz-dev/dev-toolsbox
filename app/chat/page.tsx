@@ -7,6 +7,7 @@ import { ModelSelector } from '@/components/ModelSelector';
 import { StreamingText } from '@/components/StreamingText';
 import { SearchSources, type SearchSource } from '@/components/SearchSources';
 import { DEFAULT_MODEL, type ModelId } from '@/lib/models';
+import { LoadingWithGames } from '@/components/LoadingWithGames';
 
 interface ChatMsg {
   role: 'user' | 'assistant';
@@ -146,6 +147,7 @@ export default function ChatPage() {
 
   return (
     <main className="flex-1 flex flex-col max-w-[900px] mx-auto w-full p-4 md:p-6 gap-3 min-h-[calc(100vh-3.5rem-4rem)]">
+      <LoadingWithGames isOpen={loading || searching} message={searching ? 'Searching web + preparing AI...' : 'AI generating response...'} />
       {/* Top bar: model selector + search toggle + new chat */}
       <div className="flex items-center justify-between gap-2 flex-wrap">
         <div>

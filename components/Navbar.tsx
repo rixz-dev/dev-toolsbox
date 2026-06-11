@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Github, MessageCircle, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
 const NAV_LINKS = [
@@ -50,8 +50,10 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
-          <a href="https://riz-dev-murex.vercel.app" target="_blank" rel="noopener noreferrer" className="hidden md:block text-xs text-[var(--text-muted)] hover:text-[var(--accent-orange)] transition-colors">by reiz_riz</a>
+        <div className="flex items-center gap-2">
+          <a href="https://whatsapp.com/channel/0029VbC13UP1CYoODnULpp3E" target="_blank" rel="noopener noreferrer" title="WhatsApp Channel" className="hidden md:inline-flex p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--accent-cyan)] hover:bg-[var(--bg-elevated)] transition-colors"><MessageCircle size={15}/></a>
+          <a href="https://github.com/rixz-dev" target="_blank" rel="noopener noreferrer" title="GitHub rixz-dev" className="hidden md:inline-flex p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--accent-cyan)] hover:bg-[var(--bg-elevated)] transition-colors"><Github size={15}/></a>
+          <a href="https://riz-dev-murex.vercel.app" target="_blank" rel="noopener noreferrer" className="hidden md:flex items-center gap-1 text-xs text-[var(--text-muted)] hover:text-[var(--accent-orange)] transition-colors">Portfolio <ExternalLink size={12}/></a>
           <button onClick={() => setOpen((v) => !v)} className="lg:hidden p-2 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors" aria-label="Toggle menu">
             {open ? <X size={18} /> : <Menu size={18} />}
           </button>

@@ -10,6 +10,9 @@ import {
   Wand2,
   FileText,
   ArrowRight,
+  Github,
+  MessageCircle,
+  ExternalLink,
 } from 'lucide-react';
 
 const TOOLS = [
@@ -85,6 +88,11 @@ export default function Home() {
         <p className="text-[var(--text-muted)] mt-3 max-w-xl text-sm md:text-base">
           A suite of AI-powered developer tools. Pick a tool to get started.
         </p>
+        <div className="mt-5 flex flex-wrap gap-2">
+          <a href="https://whatsapp.com/channel/0029VbC13UP1CYoODnULpp3E" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] text-xs hover:border-[var(--accent-cyan)]"><MessageCircle size={14}/> WhatsApp Channel</a>
+          <a href="https://riz-dev-murex.vercel.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] text-xs hover:border-[var(--accent-orange)]"><ExternalLink size={14}/> Portfolio</a>
+          <a href="https://github.com/rixz-dev" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[var(--border)] bg-[var(--bg-surface)] text-xs hover:border-[var(--accent-cyan)]"><Github size={14}/> GitHub rixz-dev</a>
+        </div>
       </motion.div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">

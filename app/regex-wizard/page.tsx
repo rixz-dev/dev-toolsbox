@@ -6,6 +6,7 @@ import { Wand2, Loader2, Sparkles, Check, X } from 'lucide-react';
 import { ModelSelector } from '@/components/ModelSelector';
 import { CopyButton } from '@/components/CopyButton';
 import { DEFAULT_MODEL, type ModelId } from '@/lib/models';
+import { LoadingWithGames } from '@/components/LoadingWithGames';
 
 interface RegexResult {
   regex: string;
@@ -103,6 +104,7 @@ export default function RegexWizardPage() {
 
   return (
     <main className="flex-1 max-w-[1100px] mx-auto w-full p-4 md:p-6 space-y-5">
+      <LoadingWithGames isOpen={loading} message="Conjuring regex pattern..." />
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div>
           <h1 className="font-display text-xl md:text-2xl font-bold flex items-center gap-2">
