@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monop v0.5 (beta) — by reiz_riz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="scanlines"></div>
+
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-pixel">MONOP</span>
+      <span class="badge">v0.5 β</span>
+    </div>
+    <div class="meta">by reiz_riz / rixz-dev</div>
+  </header>
+
+  <main class="lobby">
+    <section class="hero">
+      <h1 class="glitch" data-text="MONOP">MONOP</h1>
+      <p class="tagline" data-i18n="tagline">Taktik. Perdagangan. Dominasi.</p>
+      <div class="pixel-board-preview">
+        <div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div>
+        <div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div>
+        <div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div><div class="preview-cell"></div>
+      </div>
+    </section>
+
+    <section class="menu">
+      <button class="btn btn-primary" id="btn-newgame" data-i18n="newGame">
+        <span class="pixel-icon">▶</span> <span>NEW GAME</span>
+      </button>
+      <button class="btn btn-secondary" id="btn-settings" data-i18n="settings">
+        <span class="pixel-icon">⚙</span> <span>SETTINGS</span>
+      </button>
+      <a class="btn btn-support" href="https://saweria.co/riznotdev" target="_blank" rel="noopener">
+        <span class="pixel-icon">♥</span> <span data-i18n="support">SUPPORT AUTHOR</span>
+      </a>
+    </section>
+
+    <section class="difficulty-panel hidden" id="difficulty-panel">
+      <h3 data-i18n="selectDifficulty">Pilih Tingkat Kesulitan</h3>
+      <div class="diff-options">
+        <button class="diff-btn" data-diff="easy">
+          <span class="diff-title" data-i18n="easy">MUDAH</span>
+          <span class="diff-desc" data-i18n="easyDesc">Bot jarang membeli & membangun</span>
+        </button>
+        <button class="diff-btn" data-diff="medium">
+          <span class="diff-title" data-i18n="medium">MENENGAH</span>
+          <span class="diff-desc" data-i18n="mediumDesc">Bot cukup aktif berdagang & bangun</span>
+        </button>
+        <button class="diff-btn" data-diff="hard">
+          <span class="diff-title" data-i18n="hard">SULIT</span>
+          <span class="diff-desc" data-i18n="hardDesc">Bot agresif, optimal & licik</span>
+        </button>
+      </div>
+      <div class="lobby-actions">
+        <button class="btn btn-ghost" id="btn-start" data-i18n="startGame">MULAI PERMAINAN</button>
+        <button class="btn btn-ghost" id="btn-back" data-i18n="back">KEMBALI</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-overlay hidden" id="settings-overlay">
+    <div class="modal settings-modal">
+      <h2 data-i18n="settings">PENGATURAN</h2>
+      <div class="settings-grid">
+        <div class="setting-row">
+          <label data-i18n="language">Bahasa</label>
+          <select id="set-lang">
+            <option value="id">Bahasa Indonesia</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label data-i18n="theme">Tema</label>
+          <select id="set-theme">
+            <option value="dark">Dark (Default)</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label data-i18n="difficultyDefault">Kesulitan Default</label>
+          <select id="set-diff">
+            <option value="easy">Mudah</option>
+            <option value="medium" selected>Menengah</option>
+            <option value="hard">Sulit</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label data-i18n="gameSpeed">Kecepatan Game</label>
+          <select id="set-speed">
+            <option value="slow">Lambat</option>
+            <option value="normal" selected>Normal</option>
+            <option value="fast">Cepat</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label data-i18n="sound">Suara</label>
+          <select id="set-sound">
+            <option value="on">Nyala</option>
+            <option value="off">Mati</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label data-i18n="animDice">Animasi Dadu</label>
+          <select id="set-anim-dice">
+            <option value="on">Nyala</option>
+            <option value="off">Mati</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label data-i18n="freeParking">Free Parking Jackpot</label>
+          <select id="set-fp">
+            <option value="off">Off (Official)</option>
+            <option value="on">On (House Rule)</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label data-i18n="auction">Lelang Properti</label>
+          <select id="set-auction">
+            <option value="on">On (Official)</option>
+            <option value="off">Off</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <label data-i18n="startingMoney">Uang Awal</label>
+          <select id="set-startmoney">
+            <option value="1500">$1,500 (Standard)</option>
+            <option value="2000">$2,000</option>
+            <option value="1000">$1,000 (Cepat)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-settings-close" data-i18n="close">TUTUP</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="lobby-footer">
+    <span>© reiz_riz</span>
+    <a href="https://github.com/rixz-dev" target="_blank" rel="noopener">github/rixz-dev</a>
+  </footer>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
